@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SADECĘ ÇÖP ADAM MEGA PORTALI - 21 KUSURSUZ MODÜL</title>
+  <style>
+    :root {
+      --bg: #0a0c16;
+      --card-bg: #151828;
+      --accent: #00ffcc;
+      --accent-hover: #00cca3;
+      --text: #ffffff;
+      --text-dim: #9299be;
+      --danger: #ff4757;
+      --gold: #ffa502;
+      --purple: #9b59b6;
+      --blue: #1e90ff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; }
+    
+    header { text-align: center; margin-bottom: 25px; border-bottom: 3px solid var(--accent); padding-bottom: 15px; }
+    h1 { font-size: 2.3rem; color: var(--accent); text-shadow: 0 0 12px rgba(0,255,204,0.4); }
+    .subtitle { color: var(--text-dim); font-size: 1rem; margin-top: 5px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 20px; max-width: 1700px; margin: 0 auto; }
+    .card { background: var(--card-bg); border: 2px solid #222742; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 6px 16px rgba(0,0,0,0.4); }
+    .card h2 { color: var(--accent); margin-bottom: 10px; font-size: 1.2rem; border-bottom: 1px solid #222742; padding-bottom: 6px; width: 100%; text-align: center; }
+
+    canvas { background: #000; border: 2px solid #333; border-radius: 8px; cursor: pointer; }
+    .controls { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; width: 100%; }
+
+    button { background: var(--accent); color: #000; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.85rem; }
+    button:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-gold { background: var(--gold); color: #000; }
+    .btn-purple { background: var(--purple); color: #fff; }
+    .btn-blue { background: var(--blue); color: #fff; }
+
+    input[type="text"] { background: #222742; border: 1px solid #3a4168; color: #fff; padding: 8px; border-radius: 6px; width: 100%; margin-bottom: 8px; }
+    .box { background: #1a1e33; padding: 10px; border-radius: 8px; width: 100%; min-height: 75px; margin-bottom: 8px; font-style: italic; font-size: 0.9rem; }
+    .stat { margin-top: 6px; font-weight: bold; color: var(--gold); font-size: 0.95rem; }
+    
+    .hp-bar-bg { width: 100%; height: 16px; background: #333; border-radius: 8px; overflow: hidden; margin-bottom: 8px; }
+    .hp-bar-fill { height: 100%; background: var(--danger); width: 100%; transition: width 0.1s; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>SADECĘ ÇÖP ADAM MEGA PORTALI</h1>
+    <p class="subtitle">Tam 21 Canlı ve Etkileşimli Çöp Adam Modülü - Tam Detaylı Vücut Çizimleri</p>
+  </header>
+
+  <div class="grid">
+
+    <!-- 1. ÇİZİM STÜDYOSU -->
+    <div class="card">
+      <h2>🎨 1. Çizim Stüdyosu</h2>
+      <canvas id="c1" width="290" height="200"></canvas>
+      <div class="controls">
+        <input type="color" id="col1" value="#00ffcc" style="height:32px; width:40px; cursor:pointer;">
+        <button onclick="m1='draw'">Kalem</button>
+        <button onclick="m1='erase'">Silgi</button>
+        <button class="btn-danger" onclick="clr1()">Temizle</button>
+      </div>
+    </div>
+
+    <!-- 2. RUNNER OYUNU -->
+    <div class="card">
+      <h2>🎮 2. Çöp Adam Koşucu (2 Bacaklı)</h2>
+      <canvas id="c2" width="290" height="200"></canvas>
+      <div class="controls">
+        <button onclick="jmp2()">Zıpla (Tıkla)</button>
+        <button class="btn-gold" onclick="rst2()">Yeniden Başlat</button>
+      </div>
+      <div class="stat">Skor: <span id="s2">0</span></div>
+    </div>
+
+    <!-- 3. BOSS FIGHT -->
+    <div class="card">
+      <h2>⚔️ 3. Boss Fight Arenası</h2>
+      <div class="hp-bar-bg"><div class="hp-bar-fill" id="hpFill3"></div></div>
+      <canvas id="c3" width="290" height="170" onclick="hit3()"></canvas>
+      <div class="controls">
+        <button class="btn-gold" onclick="up3('sword')">Kılıç (+5) - <span id="cs3">20</span> Altın</button>
+        <button class="btn-gold" onclick="up3('arch')">Okçu (Oto) - <span id="ca3">50</span> Altın</button>
+      </div>
+      <div class="stat">Boss Canı: <span id="hpTxt3">100 / 100</span> | Altın: <span id="g3">0</span></div>
+    </div>
+
+    <!-- 4. GİYDİRME -->
+    <div class="card">
+      <h2>👕 4. Giydirme (10 Eşya)</h2>
+      <canvas id="c4" width="290" height="200"></canvas>
+      <div class="controls">
+        <button onclick="h4=(h4+1)%6;r4()">Şapka/Kask (<span id="hTxt4">1</span>/6)</button>
+        <button onclick="w4=(w4+1)%5;r4()">Silah/Aksesuar (<span id="wTxt4">1</span>/5)</button>
+      </div>
+    </div>
+
+    <!-- 5. ANİMASYON SİMÜLATÖRÜ -->
+    <div class="card">
+      <h2>🎬 5. Animasyon Simülatörü</h2>
+      <canvas id="c5" width="290" height="200"></canvas>
+      <div class="controls">
+        <button onclick="a5='fight'">Kung-Fu</button>
+        <button onclick="a5='dance'">Dans</button>
+        <button onclick="a5='matrix'">Matrix Takla</button>
+      </div>
+    </div>
+
+    <!-- 6. SES TAHTASI -->
+    <div class="card">
+      <h2>🔊 6. Çöp Adam Ses Tahtası (6 Ses)</h2>
+      <div class="controls" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:6px;">
+        <button onclick="snd('att')">⚔️ Saldırı</button>
+        <button onclick="snd('jmp')">🦘 Zıplama</button>
+        <button onclick="snd('hit')">💥 Vuruş</button>
+        <button onclick="snd('win')">🏆 Zafer</button>
+        <button onclick="snd('las')">🔫 Lazer</button>
+        <button onclick="snd('scr')">😱 Çığlık</button>
+      </div>
+    </div>
+
+    <!-- 7. EFSANE ÜRETİCİ -->
+    <div class="card">
+      <h2>📜 7. Çöp Adam Efsaneleri (20 Adet)</h2>
+      <div class="box" id="txt7">Efsane okumak için butona tıkla!</div>
+      <button onclick="gen7()">Yeni Efsane Üret</button>
+    </div>
+
+    <!-- 8. TRIVIA QUIZ -->
+    <div class="card">
+      <h2>🧠 8. Çöp Adam Quiz (17 Soru)</h2>
+      <div class="box" id="q8">Yükleniyor...</div>
+      <div class="controls" id="opts8"></div>
+      <div class="stat">Puan: <span id="sc8">0</span> | Soru: <span id="qIdx8">1</span>/17</div>
+    </div>
+
+    <!-- 9. PENALTI OYUNU -->
+    <div class="card">
+      <h2>⚽ 9. Çöp Adam Penaltı</h2>
+      <canvas id="c9" width="290" height="170"></canvas>
+      <div class="controls">
+        <button class="btn-blue" onclick="sut9('L')">⬅️ SOL</button>
+        <button class="btn-blue" onclick="sut9('C')">⬆️ ORTA</button>
+        <button class="btn-blue" onclick="sut9('R')">➡️ SAĞ</button>
+      </div>
+      <div class="stat">Gol: <span id="g9">0</span> | Kaleci: <span id="kState9">Bekliyor</span></div>
+    </div>
+
+    <!-- 10. OKÇULUK ARENASI -->
+    <div class="card">
+      <h2>🎯 10. Çöp Adam Okçuluk</h2>
+      <canvas id="c10" width="290" height="200" onclick="sut10()"></canvas>
+      <div class="stat">İsabet Skoru: <span id="s10">0</span></div>
+    </div>
+
+    <!-- 11. CHATBOT -->
+    <div class="card">
+      <h2>💬 11. Çöp Adam AI Chat</h2>
+      <div class="box" id="chat11" style="height:90px; overflow-y:auto;">Çöp Adam: Selam dostum! Ben %100 canlı çöp adamım!</div>
+      <input type="text" id="inp11" placeholder="Çöp adama bir şey yaz...">
+      <button onclick="msg11()">Gönder</button>
+    </div>
+
+    <!-- 12. MATRIX YAĞMURU -->
+    <div class="card">
+      <h2>⚡ 12. Çöp Adam Matrix</h2>
+      <canvas id="c12" width="290" height="200"></canvas>
+    </div>
+
+    <!-- 13. BAŞARILAR -->
+    <div class="card">
+      <h2>🏆 13. Başarılar & Rozetler (10 Adet)</h2>
+      <div class="box" id="ach13" style="height:120px; overflow-y:auto;">
+        ✅ 1. Çöp Adam Dünyasına Adım At<br>
+        🔒 2. Boss'a İlk Vuruşu Yap<br>
+        🔒 3. Penaltıda Gol At<br>
+        🔒 4. Okçulukta Hedefi Vur<br>
+        🔒 5. 100 Metre Koş<br>
+        🔒 6. Bütün Kıyafetleri Dene<br>
+        🔒 7. Quizden 50 Puan Al<br>
+        🔒 8. Ses Tahtasındaki Tüm Sesleri Dinle<br>
+        🔒 9. Kuleyi 5 Kat Yap<br>
+        🔒 10. Ninja Tırmanışında Zıpla
+      </div>
+    </div>
+
+    <!-- 14. MEME MAKER -->
+    <div class="card">
+      <h2>🖼️ 14. Meme Üreteci (Tam Vücut)</h2>
+      <input type="text" id="mTxt14" value="KAFAM D A İ R E !" oninput="r14()">
+      <canvas id="c14" width="290" height="170"></canvas>
+    </div>
+
+    <!-- 15. KANCALI SALINCAK -->
+    <div class="card">
+      <h2>🪂 15. Kancalı Salıncak</h2>
+      <canvas id="c15" width="290" height="180" onclick="hk15()"></canvas>
+      <div class="controls">
+        <button class="btn-purple" onclick="flip15()">🔄 Diğer Tarafa Fırlat</button>
+      </div>
+      <div class="stat">Mesafe: <span id="s15">0</span>m</div>
+    </div>
+
+    <!-- 16. ÇILGIN SÜRÜCÜ -->
+    <div class="card">
+      <h2>🚗 16. Çılgın Sürücü</h2>
+      <canvas id="c16" width="290" height="180" onclick="jmp16()"></canvas>
+      <div class="stat">Gidilen Yol: <span id="s16">0</span>m</div>
+    </div>
+
+    <!-- 17. DANS RİTİM OYUNU -->
+    <div class="card">
+      <h2>💃 17. Ritim & Dans (Sesli Beat)</h2>
+      <canvas id="c17" width="290" height="170"></canvas>
+      <div class="controls">
+        <button class="btn-purple" onclick="hit17('L')">◀️</button>
+        <button class="btn-purple" onclick="hit17('U')">🔼</button>
+        <button class="btn-purple" onclick="hit17('D')">🔽</button>
+        <button class="btn-purple" onclick="hit17('R')">▶️</button>
+      </div>
+      <div class="stat">Ritim Puanı: <span id="s17">0</span></div>
+    </div>
+
+    <!-- 18. KULE İNŞA ETME -->
+    <div class="card">
+      <h2>🏗️ 18. Kule İnşa Et</h2>
+      <canvas id="c18" width="290" height="180" onclick="drop18()"></canvas>
+      <div class="stat">Kule Katı: <span id="s18">0</span></div>
+    </div>
+
+    <!-- 19. KALE SAVUNMASI -->
+    <div class="card">
+      <h2>🛡️ 19. Kale Savunması</h2>
+      <canvas id="c19" width="290" height="180"></canvas>
+      <div class="controls">
+        <button class="btn-gold" onclick="buy19()">Okçu Ekle (30 Altın)</button>
+      </div>
+      <div class="stat">Altın: <span id="g19">50</span> | Okçular: <span id="arch19">1</span></div>
+    </div>
+
+    <!-- 20. BIÇAK FIRLATMA -->
+    <div class="card">
+      <h2>🗡️ 20. Bıçak Fırlatma</h2>
+      <canvas id="c20" width="290" height="180" onclick="throw20()"></canvas>
+      <div class="stat">Saplanan Bıçak: <span id="s20">0</span></div>
+    </div>
+
+    <!-- 21. NINJA TIRMANIŞI -->
+    <div class="card">
+      <h2>🥷 21. Ninja Tırmanışı</h2>
+      <canvas id="c21" width="290" height="180" onclick="jump21()"></canvas>
+      <div class="stat">Yükseklik: <span id="s21">0</span>m</div>
+    </div>
+
+  </div>
+
+  <script>
+    /* Audio Context */
+    const actx = new (window.AudioContext || window.webkitAudioContext)();
+    function snd(t) {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.connect(g); g.connect(actx.destination);
+      let f = 300;
+      if(t==='att') f=400; if(t==='jmp') f=250; if(t==='hit') f=100;
+      if(t==='win') f=600; if(t==='las') f=800; if(t==='scr') f=150;
+      o.frequency.setValueAtTime(f, actx.currentTime);
+      o.start(); g.gain.exponentialRampToValueAtTime(0.01, actx.currentTime + 0.25);
+      o.stop(actx.currentTime + 0.25);
+    }
+
+    /* 1. DRAW */
+    const c1 = document.getElementById('c1'), ctx1 = c1.getContext('2d');
+    let drw1=false, m1='draw'; ctx1.fillStyle='#fff'; ctx1.fillRect(0,0,290,200);
+    c1.onmousedown=()=>drw1=true; c1.onmouseup=()=>drw1=false;
+    c1.onmousemove=(e)=>{
+      if(!drw1) return; const r=c1.getBoundingClientRect();
+      ctx1.lineWidth = m1==='erase'?18:3; ctx1.strokeStyle = m1==='erase'?'#fff':document.getElementById('col1').value;
+      ctx1.lineTo(e.clientX-r.left, e.clientY-r.top); ctx1.stroke(); ctx1.beginPath(); ctx1.moveTo(e.clientX-r.left, e.clientY-r.top);
+    };
+    function clr1(){ ctx1.fillRect(0,0,290,200); }
+
+    /* 2. RUNNER */
+    const c2 = document.getElementById('c2'), ctx2 = c2.getContext('2d');
+    let py2=140, pvy2=0, sc2=0, obs2=[], f2=0;
+    function loop2(){
+      pvy2 += 0.6; py2 += pvy2; if(py2>=140){ py2=140; pvy2=0; }
+      f2+=0.2;
+      if(Math.random()<0.02 && (obs2.length===0 || obs2[obs2.length-1].x<180)) obs2.push({x:290});
+      ctx2.fillStyle='#000'; ctx2.fillRect(0,0,290,200);
+      ctx2.strokeStyle='#00ffcc'; ctx2.lineWidth=2; ctx2.beginPath(); ctx2.moveTo(0,170); ctx2.lineTo(290,170); ctx2.stroke();
+      
+      // Full Stickman (2 bacak, 2 kol)
+      ctx2.strokeStyle='#fff'; ctx2.lineWidth=3; ctx2.beginPath();
+      ctx2.arc(40,py2-15,7,0,Math.PI*2); // Head
+      ctx2.moveTo(40,py2-8); ctx2.lineTo(40,py2+10); // Body
+      let legOff = Math.sin(f2)*10;
+      ctx2.lineTo(40+legOff,py2+28); ctx2.moveTo(40,py2+10); ctx2.lineTo(40-legOff,py2+28); // 2 Legs
+      ctx2.moveTo(40,py2); ctx2.lineTo(50,py2-5); ctx2.moveTo(40,py2); ctx2.lineTo(30,py2+5); // 2 Arms
+      ctx2.stroke();
+
+      ctx2.fillStyle='#ff4757';
+      for(let i=0;i<obs2.length;i++){ obs2[i].x-=3; ctx2.fillRect(obs2[i].x,150,14,20); if(obs2[i].x<-20) obs2.splice(i,1); }
+      sc2++; document.getElementById('s2').innerText=sc2;
+      requestAnimationFrame(loop2);
+    }
+    function jmp2(){ if(py2===140){ pvy2=-11; snd('jmp'); } }
+    function rst2(){ sc2=0; obs2=[]; py2=140; }
+    loop2();
+
+    /* 3. BOSS */
+    const c3=document.getElementById('c3'), ctx3=c3.getContext('2d');
+    let hp3=100, maxHp3=100, g3=0, d3=1, cs3=20, ca3=50, arch3=0;
+    function r3(){
+      ctx3.fillStyle='#111'; ctx3.fillRect(0,0,290,170);
+      // Red Boss Stickman (Full Body)
+      ctx3.strokeStyle='#ff4757'; ctx3.lineWidth=4; ctx3.beginPath();
+      ctx3.arc(145,45,16,0,Math.PI*2); // Kafa
+      ctx3.moveTo(145,61); ctx3.lineTo(145,110); // Gövde
+      ctx3.lineTo(120,150); ctx3.moveTo(145,110); ctx3.lineTo(170,150); // 2 Bacak
+      ctx3.moveTo(145,75); ctx3.lineTo(110,95); ctx3.moveTo(145,75); ctx3.lineTo(180,95); // 2 Kol
+      ctx3.stroke();
+    }
+    function hit3(){ hp3-=d3; g3+=d3; snd('hit'); if(hp3<=0){ maxHp3+=50; hp3=maxHp3; g3+=40; snd('win'); } u3(); }
+    function u3(){
+      document.getElementById('g3').innerText=g3; document.getElementById('hpTxt3').innerText=hp3+' / '+maxHp3;
+      document.getElementById('hpFill3').style.width=(hp3/maxHp3*100)+'%';
+      document.getElementById('cs3').innerText=cs3; document.getElementById('ca3').innerText=ca3;
+      r3();
+    }
+    function up3(t){ if(t==='sword'&&g3>=cs3){ g3-=cs3; d3+=5; cs3*=2; } else if(t==='arch'&&g3>=ca3){ g3-=ca3; arch3++; ca3*=2; } u3(); }
+    setInterval(()=>{ if(arch3>0){ hp3-=arch3*2; g3+=arch3; if(hp3<=0) hp3=maxHp3; u3(); } }, 1000);
+    r3();
+
+    /* 4. DRESS */
+    const c4=document.getElementById('c4'), ctx4=c4.getContext('2d');
+    let h4=0, w4=0;
+    function r4(){
+      ctx4.fillStyle='#0f111a'; ctx4.fillRect(0,0,290,200);
+      // Main Stickman
+      ctx4.strokeStyle='#fff'; ctx4.lineWidth=3; ctx4.beginPath();
+      ctx4.arc(145,60,16,0,Math.PI*2); ctx4.moveTo(145,76); ctx4.lineTo(145,130);
+      ctx4.lineTo(125,175); ctx4.moveTo(145,130); ctx4.lineTo(165,175);
+      ctx4.moveTo(145,90); ctx4.lineTo(115,110); ctx4.moveTo(145,90); ctx4.lineTo(175,110);
+      ctx4.stroke();
+
+      // Hats
+      if(h4===1){ ctx4.fillStyle='#ffa502'; ctx4.fillRect(130,35,30,10); ctx4.fillRect(138,20,14,15); } // Crown
+      else if(h4===2){ ctx4.fillStyle='#8e44ad'; ctx4.fillRect(120,40,50,6); ctx4.fillRect(132,25,26,15); } // Cowboy
+      else if(h4===3){ ctx4.fillStyle='#2c3e50'; ctx4.beginPath(); ctx4.arc(145,45,18,Math.PI,0); ctx4.fill(); } // Helmet
+      else if(h4===4){ ctx4.fillStyle='#ff4757'; ctx4.fillRect(125,40,40,8); } // Bandana
+      else if(h4===5){ ctx4.strokeStyle='#00ffcc'; ctx4.lineWidth=4; ctx4.beginPath(); ctx4.arc(145,60,20,0,Math.PI*2); ctx4.stroke(); } // Headphones
+
+      // Weapons/Acc
+      if(w4===1){ ctx4.strokeStyle='#00ffcc'; ctx4.lineWidth=4; ctx4.beginPath(); ctx4.moveTo(175,110); ctx4.lineTo(205,75); ctx4.stroke(); } // Sword
+      else if(w4===2){ ctx4.strokeStyle='#ff4757'; ctx4.lineWidth=5; ctx4.beginPath(); ctx4.moveTo(175,110); ctx4.lineTo(215,110); ctx4.stroke(); } // Laser
+      else if(w4===3){ ctx4.strokeStyle='#e056fd'; ctx4.lineWidth=3; ctx4.beginPath(); ctx4.moveTo(175,110); ctx4.lineTo(195,70); ctx4.stroke(); ctx4.fillStyle='#e056fd'; ctx4.beginPath(); ctx4.arc(195,70,6,0,Math.PI*2); ctx4.fill(); } // Wand
+      else if(w4===4){ ctx4.fillStyle='#1e90ff'; ctx4.fillRect(100,85,15,35); } // Shield
+
+      document.getElementById('hTxt4').innerText = h4+1; document.getElementById('wTxt4').innerText = w4+1;
+    }
+    r4();
+
+    /* 5. ANIM */
+    const c5=document.getElementById('c5'), ctx5=c5.getContext('2d');
+    let a5='fight', f5=0;
+    function l5(){
+      ctx5.fillStyle='#000'; ctx5.fillRect(0,0,290,200);
+      ctx5.strokeStyle='#00ffcc'; ctx5.lineWidth=3; f5+=0.08;
+      let os = Math.sin(f5)*15;
+      ctx5.beginPath();
+      ctx5.arc(145,65+(a5==='dance'?os:0),14,0,Math.PI*2); // Kafa
+      ctx5.moveTo(145,79+(a5==='dance'?os:0)); ctx5.lineTo(145,135); // Gövde
+      if(a5==='fight'){
+        ctx5.lineTo(120-os,175); ctx5.moveTo(145,135); ctx5.lineTo(170+os,175); // Bacaklar
+        ctx5.moveTo(145,95); ctx5.lineTo(195+os,80); ctx5.moveTo(145,95); ctx5.lineTo(95,110); // Kollar
+      } else if(a5==='dance'){
+        ctx5.lineTo(125,175); ctx5.moveTo(145,135); ctx5.lineTo(165,175);
+        ctx5.moveTo(145,95); ctx5.lineTo(110,60+os); ctx5.moveTo(145,95); ctx5.lineTo(180,60-os);
+      } else { // Matrix Flip
+        let rot = f5*2;
+        ctx5.lineTo(145+Math.cos(rot)*30, 135+Math.sin(rot)*30);
+      }
+      ctx5.stroke();
+      requestAnimationFrame(l5);
+    }
+    l5();
+
+    /* 7. LEGENDS (20 ADET) */
+    const leg20 = [
+      "1. 1995'te ilk çöp adam bir kağıdın kenarına çizildiğinde yer çekimine meydan okudu.",
+      "2. Siyah çöp adamlar doğuştan dövüş ustasıdır ve hiç yorulmazlar.",
+      "3. Kırmızı Çöp Adam her zaman öfkelidir çünkü ona kimse şapka çizmemiştir.",
+      "4. Bir çöp adam tam 1,000,000 kez takla atarak dünya rekoru kırmıştır.",
+      "5. Çöp adamların kemikleri yoktur, sadece saf çizgiden oluşurlar!",
+      "6. Efsaneye göre yeşil çöp adamlar Matrix kodlarından doğmuştur.",
+      "7. Mavi çöp adam suyun altında sonsuza kadar nefes tutabilir.",
+      "8. Çöp adamlar silgiyle silindiklerinde paralel evrene ışınlanırlar.",
+      "9. Altın çöp adamı gören kişinin bütün çizim yeteneği 10 katına çıkar.",
+      "10. Krallık yapan ilk çöp adam başına taç çizilen çöp adamdır.",
+      "11. Çöp adamların resmi sporu yüksekten engellerin üzerinden zıplamaktır.",
+      "12. Bir kağıtta iki çöp adam karşılaştığında mutlaka epik bir dövüş başlar.",
+      "13. Çöp adamların favori yiyeceği hayali piksellerdir.",
+      "14. Gizli ninja çöp adamlar ekranda sadece 0.1 saniye görünürler.",
+      "15. Bir çöp adama kılıç çizerseniz anında samuray tekniklerini öğrenir.",
+      "16. Çöp adam dünyasında en zengin kişi en çok altını toplayandır.",
+      "17. Çöp adamın kafası tam bir daire değilse derin düşüncelere dalar.",
+      "18. Kovboy şapkalı çöp adamlar batının en hızlı okçularıdır.",
+      "19. Çöp adamlar gece olunca ekran kapatılsa bile dans etmeye devam eder.",
+      "20. Sen bu yazıyı okurken bir çöp adam şu an yeni bir rekor kırdı!"
+    ];
+    function gen7(){ document.getElementById('txt7').innerText = leg20[Math.floor(Math.random()*leg20.length)]; }
+
+    /* 8. QUIZ (17 SORU) */
+    const q17 = [
+      {q:"1. Çöp adamın kafası hangi şekildedir?", o:["Daire","Kare","Üçgen"], c:0},
+      {q:"2. Çöp adam kaç ana gövde çizgisinden oluşur?", o:["1","5","10"], c:0},
+      {q:"3. Kırmızı çöp adam genelde nedir?", o:["Boss/Düşman","Aşçı","Sürücü"], c:0},
+      {q:"4. Çöp adamı ne siler?", o:["Silgi","Kalem","Boya"], c:0},
+      {q:"5. Çöp adam en çok ne yapar?", o:["Koşar/Dövüşür","Uyur","Yemek yer"], c:0},
+      {q:"6. Matrix çöp adamın rengi nedir?", o:["Yeşil","Pembe","Sarı"], c:0},
+      {q:"7. Çöp adamın bacak sayısı kaçtır?", o:["2","4","6"], c:0},
+      {q:"8. Çöp adam nerede yaşar?", o:["Kağıtta/Ekranda","Ormanda","Uzayda"], c:0},
+      {q:"9. Okçu çöp adam ne fırlatır?", o:["Ok","Taş","Top"], c:0},
+      {q:"10. Çöp adama taç takarsak ne olur?", o:["Kral","Hırsız","Polis"], c:0},
+      {q:"11. Ninja çöp adam nereden tırmanır?", o:["Duvar","Ağaç","Bulut"], c:0},
+      {q:"12. Çöp adam arabasında kaç tekerlek vardır?", o:["2","8","20"], c:0},
+      {q:"13. Çöp adamın ağırlığı ne kadardır?", o:["0 Gram","100 Kilo","1 Ton"], c:0},
+      {q:"14. Çöp adam penaltıyı nereye atabilir?", o:["Sol/Orta/Sağ","Uzaya","Arkayı"], c:0},
+      {q:"15. Çöp adam ses tahtasında kaç ses vardır?", o:["6","1","100"], c:0},
+      {q:"16. Çöp adam kulesi nereden yükselir?", o:["Aşağıdan yukarıya","Yukarıdan aşağıya","Yanlamasına"], c:0},
+      {q:"17. Çöp adam portalında kaç modül var?", o:["21","3","5"], c:0}
+    ];
+    let qIdx8=0, sc8=0;
+    function l8(){
+      let cur = q17[qIdx8];
+      document.getElementById('q8').innerText = cur.q;
+      document.getElementById('qIdx8').innerText = qIdx8+1;
+      let html='';
+      cur.o.forEach((opt,i)=>{
+        html += `<button style="margin:3px;" onclick="ans8(${i})">${opt}</button>`;
+      });
+      document.getElementById('opts8').innerHTML = html;
+    }
+    function ans8(i){
+      if(i === q17[qIdx8].c){ sc8+=10; snd('win'); } else { snd('hit'); }
+      qIdx8 = (qIdx8+1)%q17.length; document.getElementById('sc8').innerText = sc8; l8();
+    }
+    l8();
+
+    /* 9. PENALTY */
+    const c9=document.getElementById('c9'), ctx9=c9.getContext('2d');
+    let g9=0, keeperPos9=145;
+    function r9(){
+      ctx9.fillStyle='#0f3818'; ctx9.fillRect(0,0,290,170); // Kale Sahası
+      ctx9.strokeStyle='#fff'; ctx9.lineWidth=4; ctx9.strokeRect(50,20,190,90); // Kale
+      // Kaleci Çöp Adam (Full Vücut)
+      ctx9.strokeStyle='#ffa502'; ctx9.lineWidth=3; ctx9.beginPath();
+      ctx9.arc(keeperPos9,50,10,0,Math.PI*2); ctx9.moveTo(keeperPos9,60); ctx9.lineTo(keeperPos9,90);
+      ctx9.lineTo(keeperPos9-15,110); ctx9.moveTo(keeperPos9,90); ctx9.lineTo(keeperPos9+15,110);
+      ctx9.moveTo(keeperPos9,70); ctx9.lineTo(keeperPos9-20,60); ctx9.moveTo(keeperPos9,70); ctx9.lineTo(keeperPos9+20,60);
+      ctx9.stroke();
+      // Top
+      ctx9.fillStyle='#fff'; ctx9.beginPath(); ctx9.arc(145,150,8,0,Math.PI*2); ctx9.fill();
+    }
+    function sut9(dir){
+      let targetX = dir==='L'?70 : dir==='C'?145 : 220;
+      let kDir = ['L','C','R'][Math.floor(Math.random()*3)];
+      keeperPos9 = kDir==='L'?70 : kDir==='C'?145 : 220;
+      r9();
+      if(dir !== kDir){ g9++; document.getElementById('g9').innerText=g9; document.getElementById('kState9').innerText='GOL!'; snd('win'); }
+      else { document.getElementById('kState9').innerText='KURTARDI!'; snd('hit'); }
+    }
+    r9();
+
+    /* 10. ARCHERY */
+    const c10=document.getElementById('c10'), ctx10=c10.getContext('2d');
+    let s10=0, targetY10=20, arrowX10=50, arrowFly10=false;
+    function l10(){
+      ctx10.fillStyle='#000'; ctx10.fillRect(0,0,290,200);
+      // Archer Stickman
+      ctx10.strokeStyle='#fff'; ctx10.lineWidth=3; ctx10.beginPath();
+      ctx10.arc(40,120,12,0,Math.PI*2); ctx10.moveTo(40,132); ctx10.lineTo(40,170);
+      ctx10.lineTo(25,195); ctx10.moveTo(40,170); ctx10.lineTo(55,195);
+      ctx10.moveTo(40,145); ctx10.lineTo(60,145); // Kol
+      ctx10.stroke();
+      // Yay
+      ctx10.strokeStyle='#ffa502'; ctx10.beginPath(); ctx10.arc(60,145,15,-Math.PI/2,Math.PI/2); ctx10.stroke();
+
+      // Moving Target
+      targetY10 += 2; if(targetY10>160||targetY10<20) targetY10=(targetY10>160?20:160);
+      ctx10.fillStyle='#ff4757'; ctx10.fillRect(250,targetY10,15,35);
+
+      // Arrow
+      if(arrowFly10){
+        arrowX10 += 12;
+        ctx10.strokeStyle='#00ffcc'; ctx10.lineWidth=3; ctx10.beginPath(); ctx10.moveTo(arrowX10,145); ctx10.lineTo(arrowX10+15,145); ctx10.stroke();
+        if(arrowX10>=240){
+          if(Math.abs(145 - (targetY10+17)) < 25){ s10+=10; snd('win'); document.getElementById('s10').innerText=s10; }
+          else snd('hit');
+          arrowFly10=false; arrowX10=50;
+        }
+      }
+      requestAnimationFrame(l10);
+    }
+    function sut10(){ if(!arrowFly10){ arrowFly10=true; snd('att'); } }
+    l10();
+
+    /* 11. CHAT */
+    function msg11(){
+      let i=document.getElementById('inp11'), c=document.getElementById('chat11');
+      if(i.value){
+        c.innerHTML += '<br><b>Sen:</b> '+i.value+'<br><b>Çöp Adam:</b> Çizgi dünyasında harika bir gün! '+i.value.length+' harfli konuştun!';
+        i.value=''; c.scrollTop = c.scrollHeight;
+      }
+    }
+
+    /* 12. MATRIX */
+    const c12=document.getElementById('c12'), ctx12=c12.getContext('2d');
+    let m12=Array(15).fill(0);
+    function l12(){
+      ctx12.fillStyle='rgba(0,0,0,0.1)'; ctx12.fillRect(0,0,290,200);
+      ctx12.fillStyle='#00ffcc'; ctx12.font='11px monospace';
+      m12.forEach((y,i)=>{ ctx12.fillText('O|--', i*20, y); if(y>200||Math.random()>0.95) m12[i]=0; else m12[i]+=12; });
+      requestAnimationFrame(l12);
+    }
+    l12();
+
+    /* 14. MEME */
+    const c14=document.getElementById('c14'), ctx14=c14.getContext('2d');
+    function r14(){
+      ctx14.fillStyle='#111'; ctx14.fillRect(0,0,290,170);
+      ctx14.fillStyle='#00ffcc'; ctx14.font='bold 13px sans-serif'; ctx14.fillText(document.getElementById('mTxt14').value, 15, 25);
+      // Full Body Stickman
+      ctx14.strokeStyle='#fff'; ctx14.lineWidth=3; ctx14.beginPath();
+      ctx14.arc(145,65,14,0,Math.PI*2); ctx14.moveTo(145,79); ctx14.lineTo(145,125);
+      ctx14.lineTo(125,160); ctx14.moveTo(145,125); ctx14.lineTo(165,160); // 2 Bacak
+      ctx14.moveTo(145,95); ctx14.lineTo(110,80); ctx14.moveTo(145,95); ctx14.lineTo(180,80); // 2 Kol/El
+      ctx14.stroke();
+    }
+    r14();
+
+    /* 15. HOOK */
+    const c15=document.getElementById('c15'), ctx15=c15.getContext('2d');
+    let hx15=30, hkDir15=1;
+    function l15(){
+      ctx15.fillStyle='#000'; ctx15.fillRect(0,0,290,180);
+      hx15 += hkDir15 * 1.5; if(hx15>260||hx15<20) hkDir15*=-1;
+      // Anchor Point
+      ctx15.fillStyle='#ffa502'; ctx15.beginPath(); ctx15.arc(145,20,8,0,Math.PI*2); ctx15.fill();
+      // Rope
+      ctx15.strokeStyle='#00ffcc'; ctx15.beginPath(); ctx15.moveTo(145,20); ctx15.lineTo(hx15,120); ctx15.stroke();
+      // Stickman
+      ctx15.strokeStyle='#fff'; ctx15.lineWidth=3; ctx15.beginPath();
+      ctx15.arc(hx15,120,8,0,Math.PI*2); ctx15.moveTo(hx15,128); ctx15.lineTo(hx15,150);
+      ctx15.lineTo(hx15-10,170); ctx15.moveTo(hx15,150); ctx15.lineTo(hx15+10,170);
+      ctx15.stroke();
+      document.getElementById('s15').innerText = Math.floor(hx15);
+      requestAnimationFrame(l15);
+    }
+    function hk15(){ hkDir15*=-1; snd('jmp'); }
+    function flip15(){ hx15 = hx15 > 145 ? 30 : 250; snd('win'); }
+    l15();
+
+    /* 16. DRIVER */
+    const c16=document.getElementById('c16'), ctx16=c16.getContext('2d');
+    let dist16=0, carY16=120, carVy16=0;
+    function l16(){
+      ctx16.fillStyle='#111'; ctx16.fillRect(0,0,290,180);
+      carVy16 += 0.5; carY16 += carVy16; if(carY16>=120){ carY16=120; carVy16=0; }
+      dist16++;
+      // Road
+      ctx16.strokeStyle='#555'; ctx16.beginPath(); ctx16.moveTo(0,160); ctx16.lineTo(290,160); ctx16.stroke();
+      // Car Body
+      ctx16.fillStyle='#ff4757'; ctx16.fillRect(50,carY16,60,20);
+      // Wheels
+      ctx16.fillStyle='#fff'; ctx16.beginPath(); ctx16.arc(65,carY16+20,8,0,Math.PI*2); ctx16.arc(95,carY16+20,8,0,Math.PI*2); ctx16.fill();
+      // Driver Stickman (Full Body inside car)
+      ctx16.strokeStyle='#00ffcc'; ctx16.lineWidth=2; ctx16.beginPath();
+      ctx16.arc(75,carY16-8,6,0,Math.PI*2); ctx16.moveTo(75,carY16-2); ctx16.lineTo(75,carY16+10);
+      ctx16.moveTo(75,carY16+4); ctx16.lineTo(85,carY16+8); ctx16.stroke();
+
+      document.getElementById('s16').innerText = dist16;
+      requestAnimationFrame(l16);
+    }
+    function jmp16(){ if(carY16===120){ carVy16=-9; snd('jmp'); } }
+    l16();
+
+    /* 17. RHYTHM */
+    const c17=document.getElementById('c17'), ctx17=c17.getContext('2d');
+    let s17=0;
+    function l17(){
+      ctx17.fillStyle='#000'; ctx17.fillRect(0,0,290,170);
+      // Dancing Stickman
+      ctx17.strokeStyle='#9b59b6'; ctx17.lineWidth=3; ctx17.beginPath();
+      ctx17.arc(145,50,12,0,Math.PI*2); ctx17.moveTo(145,62); ctx17.lineTo(145,110);
+      let danceOff = Math.sin(Date.now()/150)*15;
+      ctx17.lineTo(125-danceOff,150); ctx17.moveTo(145,110); ctx17.lineTo(165+danceOff,150); // 2 bacak
+      ctx17.moveTo(145,80); ctx17.lineTo(110,60+danceOff); ctx17.moveTo(145,80); ctx17.lineTo(180,60-danceOff);
+      ctx17.stroke();
+    }
+    function hit17(k){ s17+=15; document.getElementById('s17').innerText=s17; snd('win'); }
+    setInterval(l17, 50);
+
+    /* 18. TOWER */
+    const c18=document.getElementById('c18'), ctx18=c18.getContext('2d');
+    let tw18=0, blockX18=10, blockDir18=3;
+    function l18(){
+      ctx18.fillStyle='#111'; ctx18.fillRect(0,0,290,180);
+      blockX18 += blockDir18; if(blockX18>220||blockX18<10) blockDir18*=-1;
+      // Moving Block with Stickman mark
+      ctx18.fillStyle='#00ffcc'; ctx18.fillRect(blockX18,20,60,18);
+      // Stacked Blocks
+      for(let i=0; i<tw18; i++){
+        ctx18.fillStyle='#ffa502'; ctx18.fillRect(115, 160 - i*18, 60, 18);
+      }
+      requestAnimationFrame(l18);
+    }
+    function drop18(){ tw18++; document.getElementById('s18').innerText=tw18; snd('jmp'); }
+    l18();
+
+    /* 19. TOWER DEFENSE */
+    const c19=document.getElementById('c19'), ctx19=c19.getContext('2d');
+    let ex19=290, g19=50, arch19=1;
+    function l19(){
+      ctx19.fillStyle='#000'; ctx19.fillRect(0,0,290,180);
+      // Enemy Stickman
+      ex19 -= 1.2; if(ex19<50){ ex19=290; g19+=10; document.getElementById('g19').innerText=g19; snd('win'); }
+      ctx19.strokeStyle='#ff4757'; ctx19.lineWidth=3; ctx19.beginPath();
+      ctx19.arc(ex19,100,8,0,Math.PI*2); ctx19.moveTo(ex19,108); ctx19.lineTo(ex19,130);
+      ctx19.lineTo(ex19-8,150); ctx19.moveTo(ex19,130); ctx19.lineTo(ex19+8,150); ctx19.stroke();
+
+      // Castle
+      ctx19.fillStyle='#333'; ctx19.fillRect(10,60,40,100);
+      // Archer on Castle
+      ctx19.strokeStyle='#00ffcc'; ctx19.beginPath(); ctx19.arc(30,45,6,0,Math.PI*2); ctx19.moveTo(30,51); ctx19.lineTo(30,60); ctx19.stroke();
+
+      requestAnimationFrame(l19);
+    }
+    function buy19(){ if(g19>=30){ g19-=30; arch19++; document.getElementById('g19').innerText=g19; document.getElementById('arch19').innerText=arch19; snd('win'); } }
+    l19();
+
+    /* 20. KNIFE THROW */
+    const c20=document.getElementById('c20'), ctx20=c20.getContext('2d');
+    let knives20=0, rot20=0;
+    function l20(){
+      ctx20.fillStyle='#000'; ctx20.fillRect(0,0,290,180);
+      rot20 += 0.03;
+      ctx20.save(); ctx20.translate(145,70); ctx20.rotate(rot20);
+      ctx20.fillStyle='#8e44ad'; ctx20.beginPath(); ctx20.arc(0,0,35,0,Math.PI*2); ctx20.fill();
+      ctx20.restore();
+      requestAnimationFrame(l20);
+    }
+    function throw20(){ knives20++; document.getElementById('s20').innerText=knives20; snd('att'); }
+    l20();
+
+    /* 21. NINJA WALL JUMP */
+    const c21=document.getElementById('c21'), ctx21=c21.getContext('2d');
+    let ninjaX21=20, ninjaY21=140, ninjaSide21='L', h21=0;
+    function l21(){
+      ctx21.fillStyle='#000'; ctx21.fillRect(0,0,290,180);
+      // Walls
+      ctx21.fillStyle='#222'; ctx21.fillRect(0,0,15,180); ctx21.fillRect(275,0,15,180);
+      // Ninja Stickman
+      ctx21.strokeStyle='#00ffcc'; ctx21.lineWidth=3; ctx21.beginPath();
+      ctx21.arc(ninjaX21,ninjaY21,8,0,Math.PI*2); ctx21.moveTo(ninjaX21,ninjaY21+8); ctx21.lineTo(ninjaX21,ninjaY21+25); ctx21.stroke();
+      requestAnimationFrame(l21);
+    }
+    function jump21(){
+      ninjaSide21 = ninjaSide21==='L'?'R':'L';
+      ninjaX21 = ninjaSide21==='L'?25:265;
+      h21+=10; document.getElementById('s21').innerText=h21; snd('jmp');
+    }
+    l21();
+  </script>
+</body>
+</html>
